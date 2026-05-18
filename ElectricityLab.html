@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مختبر الكهرباء والأمن - Electricity & Safety Lab</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --electric-blue: #0066cc;
+      --electric-light: #e6f2ff;
+      --warning-orange: #ff9933;
+      --warning-light: #fff4e6;
+      --success-green: #00aa44;
+      --danger-red: #cc0000;
+      --text-dark: #222;
+      --text-light: #666;
+      --border-light: #ddd;
+      --bg-light: #f9f9f9;
+    }
+
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: linear-gradient(135deg, var(--electric-light) 0%, var(--warning-light) 100%);
+      min-height: 100vh;
+      padding: 1rem;
+      color: var(--text-dark);
+    }
+
+    .container {
+      max-width: 550px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .header {
+      background: linear-gradient(135deg, var(--electric-blue) 0%, #0052a3 100%);
+      color: white;
+      padding: 2rem 1.5rem;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .header p {
+      font-size: 0.9rem;
+      opacity: 0.9;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    .tabs {
+      display: flex;
+      border-bottom: 2px solid var(--border-light);
+      background: var(--bg-light);
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 1rem;
+      background: none;
+      border: none;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-light);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border-bottom: 3px solid transparent;
+    }
+
+    .tab-btn.active {
+      color: var(--electric-blue);
+      border-bottom-color: var(--electric-blue);
+    }
+
+    .tab-btn:hover {
+      background: rgba(0, 102, 204, 0.05);
+    }
+
+    .tab-content {
+      display: none;
+      padding: 2rem 1.5rem;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* ===== FORM SECTIONS ===== */
+    .section {
+      margin-bottom: 2rem;
+    }
+
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--electric-blue);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--electric-light);
+    }
+
+    .input-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .input-field {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .input-field label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 0.4rem;
+    }
+
+    .input-field .unit {
+      font-size: 0.8rem;
+      color: var(--text-light);
+      font-family: 'Roboto', sans-serif;
+    }
+
+    .input-field input {
+      padding: 0.7rem;
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      font-family: 'Roboto', sans-serif;
+      font-size: 0.95rem;
+      transition: border-color 0.2s;
+    }
+
+    .input-field input:focus {
+      outline: none;
+      border-color: var(--electric-blue);
+      box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+    }
+
+    /* ===== CALCULATION RESULTS ===== */
+    .results-box {
+      background: var(--electric-light);
+      border-right: 4px solid var(--electric-blue);
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+    }
+
+    .result-step {
+      margin-bottom: 1.5rem;
+    }
+
+    .result-step:last-child {
+      margin-bottom: 0;
+    }
+
+    .step-label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--electric-blue);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.5rem;
+    }
+
+    .formula {
+      background: white;
+      padding: 0.8rem;
+      border-radius: 6px;
+      margin-bottom: 0.5rem;
+      font-family: 'Roboto', sans-serif;
+      font-size: 0.95rem;
+      text-align: center;
+      border: 1px solid var(--electric-light);
+    }
+
+    .formula-symbol {
+      font-style: italic;
+      color: var(--electric-blue);
+      font-weight: 600;
+    }
+
+    .result-value {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--success-green);
+      font-family: 'Roboto', sans-serif;
+      text-align: center;
+    }
+
+    .result-value .unit {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin-left: 0.3rem;
+    }
+
+    .sub {
+      display: inline;
+      font-size: 0.75em;
+      vertical-align: sub;
+    }
+
+    .sup {
+      display: inline;
+      font-size: 0.75em;
+      vertical-align: super;
+    }
+
+    /* ===== BUTTONS ===== */
+    .button {
+      padding: 0.9rem 1.5rem;
+      border: none;
+      border-radius: 6px;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background: var(--electric-blue);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #0052a3;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+    }
+
+    .btn-secondary {
+      background: var(--warning-orange);
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background: #e68800;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 153, 51, 0.3);
+    }
+
+    .button-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    /* ===== SAFETY MODULE ===== */
+    .select-wrapper {
+      margin-bottom: 1.5rem;
+    }
+
+    .select-wrapper label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--text-dark);
+    }
+
+    .select-wrapper select {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 0.95rem;
+      background: white;
+      color: var(--text-dark);
+      cursor: pointer;
+    }
+
+    .select-wrapper select:focus {
+      outline: none;
+      border-color: var(--electric-blue);
+      box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+    }
+
+    .diagnosis-box {
+      background: var(--warning-light);
+      border-right: 4px solid var(--warning-orange);
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+
+    .diagnosis-box.cause {
+      background: #ffe6e6;
+      border-right-color: var(--danger-red);
+    }
+
+    .diagnosis-box.solution {
+      background: #e6ffe6;
+      border-right-color: var(--success-green);
+    }
+
+    .diagnosis-box.rule {
+      background: var(--electric-light);
+      border-right-color: var(--electric-blue);
+    }
+
+    .diagnosis-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.7rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .diagnosis-title.cause {
+      color: var(--danger-red);
+    }
+
+    .diagnosis-title.solution {
+      color: var(--success-green);
+    }
+
+    .diagnosis-title.rule {
+      color: var(--electric-blue);
+    }
+
+    .diagnosis-content {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--text-dark);
+    }
+
+    .icon {
+      font-size: 1.2rem;
+    }
+
+    /* ===== EXERCISE MODE ===== */
+    .exercise-section {
+      background: var(--warning-light);
+      padding: 1.5rem;
+      border-radius: 8px;
+      border-left: 4px solid var(--warning-orange);
+    }
+
+    .exercise-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--warning-orange);
+      margin-bottom: 1rem;
+    }
+
+    .exercise-prompt {
+      background: white;
+      padding: 1rem;
+      border-radius: 6px;
+      margin-bottom: 1rem;
+      font-family: 'Roboto', sans-serif;
+      text-align: center;
+      font-size: 0.95rem;
+    }
+
+    .feedback {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 6px;
+      display: none;
+    }
+
+    .feedback.correct {
+      display: block;
+      background: #e6ffe6;
+      border: 1px solid var(--success-green);
+      color: var(--success-green);
+    }
+
+    .feedback.incorrect {
+      display: block;
+      background: #ffe6e6;
+      border: 1px solid var(--danger-red);
+      color: var(--danger-red);
+    }
+
+    .feedback-text {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .feedback-detail {
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 480px) {
+      .header h1 {
+        font-size: 1.5rem;
+      }
+
+      .container {
+        margin: 0;
+        border-radius: 0;
+      }
+
+      .tab-content {
+        padding: 1.5rem 1rem;
+      }
+
+      .section {
+        margin-bottom: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- HEADER -->
+    <div class="header">
+      <h1>مختبر الكهرباء والأمن</h1>
+      <p>Electricity & Safety Lab | BEM Physics</p>
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="ac">التيار المتناوب</button>
+      <button class="tab-btn" data-tab="safety">الأمن الكهربائي</button>
+    </div>
+
+    <!-- TAB 1: ALTERNATING CURRENT -->
+    <div id="ac" class="tab-content active">
+      <div class="section">
+        <h2 class="section-title">📊 راسم الاهتزاز المهبطي (Oscilloscope)</h2>
+        
+        <!-- VERTICAL AXIS INPUT -->
+        <h3 style="font-size: 0.95rem; color: var(--electric-blue); margin-bottom: 0.8rem; font-weight: 600;">محور التوترات (Vertical Axis)</h3>
+        <div class="input-group">
+          <div class="input-field">
+            <label>عدد التقسيمات n <span class="unit">(divisions)</span></label>
+            <input type="number" id="n" inputmode="decimal" placeholder="مثال: 3" min="0" step="0.1">
+          </div>
+          <div class="input-field">
+            <label>الحساسية العمودية S<span class="sub">v</span> <span class="unit">(V/div)</span></label>
+            <input type="number" id="sv" inputmode="decimal" placeholder="مثال: 5" min="0" step="0.1">
+          </div>
+        </div>
+
+        <!-- HORIZONTAL AXIS INPUT -->
+        <h3 style="font-size: 0.95rem; color: var(--electric-blue); margin-bottom: 0.8rem; font-weight: 600;">محور الزمن (Horizontal Axis)</h3>
+        <div class="input-group">
+          <div class="input-field">
+            <label>عدد التقسيمات m <span class="unit">(divisions)</span></label>
+            <input type="number" id="m" inputmode="decimal" placeholder="مثال: 2" min="0" step="0.1">
+          </div>
+          <div class="input-field">
+            <label>الحساسية الأفقية S<span class="sub">h</span> <span class="unit">(ms/div)</span></label>
+            <input type="number" id="sh" inputmode="decimal" placeholder="مثال: 10" min="0" step="0.1">
+          </div>
+        </div>
+
+        <!-- CALCULATE BUTTON -->
+        <button class="button btn-primary" onclick="calculateAC()">حساب النتائج 🔍</button>
+
+        <!-- RESULTS SECTION -->
+        <div id="acResults" style="display: none; margin-top: 2rem;">
+          <div class="results-box">
+            
+            <!-- UMAX RESULT -->
+            <div class="result-step">
+              <div class="step-label">⚡ الخطوة 1: القانون الأول</div>
+              <div class="formula">
+                U<span class="sub">max</span> = n × S<span class="sub">v</span>
+              </div>
+              <div class="formula">
+                U<span class="sub">max</span> = <span id="calc_umax_sub">-</span>
+              </div>
+              <div class="result-value">
+                U<span class="sub">max</span> = <span id="umax_result">-</span> <span class="unit">V</span>
+              </div>
+            </div>
+
+            <!-- UEFF RESULT -->
+            <div class="result-step">
+              <div class="step-label">⚡ الخطوة 2: التوتر الفعّال</div>
+              <div class="formula">
+                U<span class="sub">eff</span> = U<span class="sub">max</span> ÷ √2
+              </div>
+              <div class="formula">
+                U<span class="sub">eff</span> = <span id="calc_ueff_sub">-</span>
+              </div>
+              <div class="result-value">
+                U<span class="sub">eff</span> = <span id="ueff_result">-</span> <span class="unit">V</span>
+              </div>
+            </div>
+
+            <!-- PERIOD RESULT -->
+            <div class="result-step">
+              <div class="step-label">⏱️ الخطوة 3: الدور الزمني (بالميلي ثانية)</div>
+              <div class="formula">
+                T = m × S<span class="sub">h</span>
+              </div>
+              <div class="formula">
+                T = <span id="calc_t_sub">-</span>
+              </div>
+              <div class="result-value">
+                T = <span id="t_ms_result">-</span> <span class="unit">ms</span>
+              </div>
+            </div>
+
+            <!-- PERIOD CONVERSION -->
+            <div class="result-step">
+              <div class="step-label">⏱️ الخطوة 4: تحويل الدور إلى الثواني (CRITICAL)</div>
+              <div class="formula">
+                T<span class="sub">s</span> = T<span class="sub">ms</span> ÷ 1000
+              </div>
+              <div class="formula">
+                T<span class="sub">s</span> = <span id="calc_t_s_sub">-</span>
+              </div>
+              <div class="result-value">
+                T<span class="sub">s</span> = <span id="t_s_result">-</span> <span class="unit">s</span>
+              </div>
+            </div>
+
+            <!-- FREQUENCY RESULT -->
+            <div class="result-step">
+              <div class="step-label">📡 الخطوة 5: التردد</div>
+              <div class="formula">
+                f = 1 ÷ T<span class="sub">s</span>
+              </div>
+              <div class="formula">
+                f = <span id="calc_f_sub">-</span>
+              </div>
+              <div class="result-value">
+                f = <span id="f_result">-</span> <span class="unit">Hz</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- EXERCISE SECTION -->
+      <div class="section">
+        <div class="exercise-section">
+          <h3 class="exercise-title">🎯 توليد تمرين</h3>
+          <p style="font-size: 0.9rem; margin-bottom: 1rem; color: var(--text-light);">اضغط الزر لتوليد تمرين عشوائي وحل المسألة:</p>
+          <button class="button btn-secondary" onclick="generateExercise()">توليد تمرين جديد</button>
+
+          <div id="exercisePanel" style="display: none; margin-top: 1.5rem;">
+            <div class="exercise-prompt" id="exercisePrompt"></div>
+            
+            <div class="input-group">
+              <div class="input-field">
+                <label>إجابتك: U<span class="sub">max</span> <span class="unit">(V)</span></label>
+                <input type="number" id="userUmax" inputmode="decimal" placeholder="أدخل الإجابة">
+              </div>
+              <div class="input-field">
+                <label>إجابتك: f <span class="unit">(Hz)</span></label>
+                <input type="number" id="userF" inputmode="decimal" placeholder="أدخل الإجابة">
+              </div>
+            </div>
+
+            <button class="button btn-primary" onclick="checkExercise()">تحقق من الإجابة ✓</button>
+            <div id="exerciseFeedback" class="feedback"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: ELECTRICAL SAFETY -->
+    <div id="safety" class="tab-content">
+      <div class="section">
+        <h2 class="section-title">🔒 تشخيص المشاكل الشائعة</h2>
+        
+        <div class="select-wrapper">
+          <label for="safetySelect">اختر المشكلة الشائعة:</label>
+          <select id="safetySelect" onchange="showDiagnosis()">
+            <option value="">-- اختر مشكلة --</option>
+            <option value="shock_metal">صدمة كهربائية عند لمس الهيكل المعدني</option>
+            <option value="breaker_trip">انقطاع التيار عند تشغيل عدة أجهزة</option>
+            <option value="shock_bulb">صدمة عند تغيير مصباح والقاطعة مفتوحة</option>
+            <option value="device_fail">عدم اشتغال جهاز رغم سلامته</option>
+          </select>
+        </div>
+
+        <!-- DIAGNOSIS BOXES -->
+        <div id="diagnosisPanel" style="display: none; margin-top: 1.5rem;">
+          <div class="diagnosis-box cause">
+            <div class="diagnosis-title cause">
+              <span class="icon">⚠️</span> السبب
+            </div>
+            <div class="diagnosis-content" id="causesContent"></div>
+          </div>
+
+          <div class="diagnosis-box solution">
+            <div class="diagnosis-title solution">
+              <span class="icon">✓</span> الحل
+            </div>
+            <div class="diagnosis-content" id="solutionContent"></div>
+          </div>
+
+          <div class="diagnosis-box rule">
+            <div class="diagnosis-title rule">
+              <span class="icon">📋</span> القاعدة الأمنية
+            </div>
+            <div class="diagnosis-content" id="ruleContent"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SAFETY RULES REFERENCE -->
+      <div class="section">
+        <h2 class="section-title">📚 مرجع القواعد الأمنية</h2>
+        <div style="background: var(--electric-light); padding: 1.5rem; border-radius: 8px; font-size: 0.9rem; line-height: 1.7;">
+          <p><strong>🔌 التأريض (Earth Wire):</strong> يحمي من الصدمات الكهربائية بتفريغ التيار إلى الأرض.</p>
+          <p style="margin-top: 1rem;"><strong>⚡ الحماية (Protection):</strong> القواطع والفيوزات تقطع التيار عند الإفراط في الاستهلاك.</p>
+          <p style="margin-top: 1rem;"><strong>🛡️ العزل (Insulation):</strong> يمنع لمس الأسلاك الناقلة للتيار.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ===== TAB SWITCHING =====
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tabName = btn.getAttribute('data-tab');
+        
+        // Hide all tabs
+        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        
+        // Show selected tab
+        document.getElementById(tabName).classList.add('active');
+        btn.classList.add('active');
+      });
+    });
+
+    // ===== AC CALCULATIONS =====
+    function calculateAC() {
+      const n = parseFloat(document.getElementById('n').value);
+      const sv = parseFloat(document.getElementById('sv').value);
+      const m = parseFloat(document.getElementById('m').value);
+      const sh = parseFloat(document.getElementById('sh').value);
+
+      if (!n || !sv || !m || !sh) {
+        alert('⚠️ يرجى ملء جميع الحقول');
+        return;
+      }
+
+      // Calculations
+      const umax = n * sv;
+      const ueff = (umax / Math.sqrt(2)).toFixed(2);
+      const t_ms = m * sh;
+      const t_s = (t_ms / 1000).toFixed(4);
+      const f = (1 / t_s).toFixed(2);
+
+      // Display results
+      document.getElementById('acResults').style.display = 'block';
+      
+      document.getElementById('calc_umax_sub').textContent = `${n} × ${sv}`;
+      document.getElementById('umax_result').textContent = umax.toFixed(2);
+      
+      document.getElementById('calc_ueff_sub').textContent = `${umax.toFixed(2)} ÷ √2 = ${umax.toFixed(2)} ÷ 1.414`;
+      document.getElementById('ueff_result').textContent = ueff;
+      
+      document.getElementById('calc_t_sub').textContent = `${m} × ${sh}`;
+      document.getElementById('t_ms_result').textContent = t_ms.toFixed(2);
+      
+      document.getElementById('calc_t_s_sub').textContent = `${t_ms.toFixed(2)} ÷ 1000`;
+      document.getElementById('t_s_result').textContent = t_s;
+      
+      document.getElementById('calc_f_sub').textContent = `1 ÷ ${t_s}`;
+      document.getElementById('f_result').textContent = f;
+
+      // Store for exercise checking
+      window.acResults = { umax, ueff, t_ms, t_s, f, n, sv, m, sh };
+
+      // Scroll to results
+      document.getElementById('acResults').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // ===== EXERCISE GENERATION =====
+    let currentExercise = null;
+
+    function generateExercise() {
+      const n = Math.floor(Math.random() * 4) + 1;
+      const sv = Math.floor(Math.random() * 5) + 2;
+      const m = Math.floor(Math.random() * 4) + 1;
+      const sh = Math.floor(Math.random() * 5) + 5;
+
+      currentExercise = { n, sv, m, sh };
+
+      const umaxCorrect = n * sv;
+      const t_ms = m * sh;
+      const t_s = t_ms / 1000;
+      const fCorrect = (1 / t_s).toFixed(2);
+
+      currentExercise.umaxCorrect = umaxCorrect;
+      currentExercise.fCorrect = fCorrect;
+
+      const prompt = `
+        <strong>📊 تمرين عشوائي:</strong><br>
+        راسم الاهتزاز يظهر:<br>
+        n = ${n} تقسيمات، S<sub>v</sub> = ${sv} V/div<br>
+        m = ${m} تقسيمات، S<sub>h</sub> = ${sh} ms/div<br>
+        <strong>احسب: U<sub>max</sub> و f</strong>
+      `;
+
+      document.getElementById('exercisePrompt').innerHTML = prompt;
+      document.getElementById('exercisePanel').style.display = 'block';
+      document.getElementById('exerciseFeedback').style.display = 'none';
+      document.getElementById('userUmax').value = '';
+      document.getElementById('userF').value = '';
+    }
+
+    function checkExercise() {
+      if (!currentExercise) {
+        alert('⚠️ يرجى توليد تمرين أولاً');
+        return;
+      }
+
+      const userUmax = parseFloat(document.getElementById('userUmax').value);
+      const userF = parseFloat(document.getElementById('userF').value);
+
+      if (!userUmax || !userF) {
+        alert('⚠️ يرجى ملء الإجابات');
+        return;
+      }
+
+      const umaxCorrect = currentExercise.umaxCorrect;
+      const fCorrect = parseFloat(currentExercise.fCorrect);
+
+      const umaxOk = Math.abs(userUmax - umaxCorrect) < 0.01;
+      const fOk = Math.abs(userF - fCorrect) < 0.5;
+      const allCorrect = umaxOk && fOk;
+
+      const feedbackDiv = document.getElementById('exerciseFeedback');
+      feedbackDiv.style.display = 'block';
+      feedbackDiv.classList.remove('correct', 'incorrect');
+
+      if (allCorrect) {
+        feedbackDiv.classList.add('correct');
+        feedbackDiv.innerHTML = `
+          <div class="feedback-text">✅ ممتاز! إجابتك صحيحة!</div>
+          <div class="feedback-detail">
+            U<sub>max</sub> = ${umaxCorrect} V ✓<br>
+            f = ${fCorrect} Hz ✓
+          </div>
+        `;
+      } else {
+        feedbackDiv.classList.add('incorrect');
+        let detail = '<div class="feedback-detail">';
+        if (!umaxOk) detail += `❌ U<sub>max</sub> الصحيحة: ${umaxCorrect} V (أدخلت: ${userUmax})<br>`;
+        if (!fOk) detail += `❌ f الصحيحة: ${fCorrect} Hz (أدخلت: ${userF})<br>`;
+        detail += '<br>💡 حاول مرة أخرى!</div>';
+        
+        feedbackDiv.innerHTML = `
+          <div class="feedback-text">⚠️ بعض الإجابات غير صحيحة</div>
+          ${detail}
+        `;
+      }
+
+      feedbackDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    // ===== SAFETY DIAGNOSTICS =====
+    const safetyData = {
+      shock_metal: {
+        cause: 'السلك الناقل (Phase) يلمس الهيكل المعدني للجهاز + عدم وجود سلك تأريض (Earth wire) لتفريغ التيار.',
+        solution: 'عزل السلك الناقي وتوصيل سلك التأريض بشكل صحيح للهيكل المعدني.',
+        rule: 'سلك التأريض يحمي الشخص من الصدمة بتوفير مسار آمن للتيار نحو الأرض.'
+      },
+      breaker_trip: {
+        cause: 'الاستهلاك الإجمالي للأجهزة يتجاوز السعة المقررة للقاطع الرئيسي، مما يسبب حملاً زائداً.',
+        solution: 'تقليل عدد الأجهزة المشغلة في نفس الوقت أو استبدال القاطع برأس أكبر.',
+        rule: 'القواطع الكهربائية تحمي الشبكة من الحمل الزائد بقطع التيار تلقائياً.'
+      },
+      shock_bulb: {
+        cause: 'السلك الناقي (Phase) للمصباح لا يزال يحمل التيار حتى عند فتح القاطعة، لأن القاطعة قد تكون موضوعة على السلك المحايد بدلاً من الناقي.',
+        solution: 'تأكد من أن القاطعة مثبتة على السلك الناقي (Phase) وليس على المحايد (Neutral).',
+        rule: 'القاطعة يجب أن توقف التيار عن جميع المستقبلات لضمان الأمان عند الصيانة.'
+      },
+      device_fail: {
+        cause: 'الفيوز (Fuse) قد يكون محترقاً أو مقطوعاً بسبب حمل زائد سابق أو عطل في الجهاز.',
+        solution: 'استبدال الفيوز بآخر من نفس التصنيف (مثلاً 10A)، والتحقق من سبب احتراقه.',
+        rule: 'الفيوز يحمي الدارة والجهاز من الحمل الزائد بقطع التيار تلقائياً عند تجاوز التيار المقرر.'
+      }
+    };
+
+    function showDiagnosis() {
+      const selected = document.getElementById('safetySelect').value;
+      if (!selected) {
+        document.getElementById('diagnosisPanel').style.display = 'none';
+        return;
+      }
+
+      const data = safetyData[selected];
+      document.getElementById('causesContent').textContent = data.cause;
+      document.getElementById('solutionContent').textContent = data.solution;
+      document.getElementById('ruleContent').textContent = data.rule;
+      document.getElementById('diagnosisPanel').style.display = 'block';
+
+      document.getElementById('diagnosisPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  </script>
+</body>
+</html>
