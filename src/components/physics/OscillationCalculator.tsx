@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
+import { MathContent } from '@/components/MathContent';
 import { solveOscillation, OscillationInput, OscillationResult, PedagogyMode } from '@/lib/physicsEngine';
 
 interface Props { mode: PedagogyMode; }
@@ -89,10 +90,13 @@ export default function OscillationCalculator({ mode }: Props) {
             <Card className="border-2 border-green-500/20"><CardHeader><div className="flex items-center justify-between"><CardTitle className="text-lg text-green-600">النتيجة</CardTitle><Badge variant="outline">{result.oscillationType}</Badge></div></CardHeader>
               <CardContent className="space-y-4">
                 <div className="p-4 rounded-xl bg-gradient-to-br from-green-500/10 to-emerald-500/10 border border-green-500/20 text-center">
-                  <p className="text-sm text-muted-foreground">القانون</p><p className="text-lg font-mono font-bold text-primary">{result.formula}</p>
+                  <p className="text-sm text-muted-foreground">القانون</p>
+                  <div className="text-lg font-bold text-primary mx-auto max-w-full">
+                    <MathContent content={result.formula} />
+                  </div>
                   <p className="text-3xl font-bold text-green-600 mt-2">{result.value.toFixed(4)} {result.unit}</p>
                 </div>
-                {result.waveEquation && <div className="p-3 rounded-lg bg-purple-500/10"><p className="text-sm font-medium">معادلة الحركة:</p><p className="font-mono text-primary">{result.waveEquation}</p></div>}
+                {result.waveEquation && <div className="p-3 rounded-lg bg-purple-500/10"><p className="text-sm font-medium">معادلة الحركة:</p><div className="font-mono text-primary"><MathContent content={result.waveEquation} /></div></div>}
                 {result.angularFrequency && <div className="p-3 rounded-lg bg-blue-500/10"><p className="text-sm">النبض: <span className="font-mono font-bold">ω = {result.angularFrequency.toFixed(2)} rad/s</span></p></div>}
                 {mode !== 'exam' && result.steps.map((step, i) => {
                   const combinedText = step.formula ? `${step.titleAr}: $${step.formula}$` : step.titleAr;

@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
+import { MathContent } from '@/components/MathContent';
 import { PedagogyMode } from '@/lib/physicsEngine';
 import { PHYSICS_CONSTANTS } from '@/lib/physicsConstants';
 
@@ -822,7 +823,9 @@ export default function ThermodynamicsCalculator({ mode }: Props) {
                 <div className="p-4 rounded-xl bg-gradient-to-br from-green-500/10 to-emerald-500/10 border border-green-500/20">
                   <div className="text-center">
                     <p className="text-sm text-muted-foreground mb-1">القانون المستخدم</p>
-                    <p className="text-lg font-mono font-bold text-primary">{result.formula}</p>
+                    <div className="text-lg font-bold text-primary mx-auto max-w-full">
+                      <MathContent content={result.formula} />
+                    </div>
                     <p className="text-3xl font-bold text-green-600 mt-2">
                       {result.value.toFixed(4)} {result.unit}
                     </p>

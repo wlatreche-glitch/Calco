@@ -67,7 +67,10 @@ export default function CircuitCalculator({ mode }: Props) {
             <Card className="border-2 border-green-500/20"><CardHeader><div className="flex items-center justify-between"><CardTitle className="text-lg text-green-600">النتيجة</CardTitle><Badge variant="outline">{result.circuitType}</Badge></div></CardHeader>
               <CardContent className="space-y-4">
                 <div className="p-4 rounded-xl bg-gradient-to-br from-green-500/10 to-emerald-500/10 border border-green-500/20 text-center">
-                  <p className="text-sm text-muted-foreground">القانون</p><p className="text-lg font-mono font-bold text-primary">{result.formula}</p>
+                  <p className="text-sm text-muted-foreground">القانون</p>
+                  <div className="text-lg font-bold text-primary mx-auto max-w-full">
+                    <MathContent content={result.formula} />
+                  </div>
                   <p className="text-3xl font-bold text-green-600 mt-2">{result.value.toFixed(3)} {result.unit}</p>
                 </div>
                 {result.totalCurrent !== undefined && <div className="p-3 rounded-lg bg-blue-500/10"><p className="text-sm">التيار الكلي: <span className="font-mono">{result.totalCurrent.toFixed(3)} A</span></p></div>}

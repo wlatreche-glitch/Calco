@@ -92,7 +92,18 @@ export function normalizeToLatex(expr: string): string {
   result = result.replace(/μ/g, '\\mu ');
   result = result.replace(/ν/g, '\\nu ');
 
-  // 8. Clean up extra spaces before/after operators
+  // 8. Handle unicode subscript and superscript characters
+  const subscriptMap: Record<string, string> = {
+    '₀': '0', '₁': '1', '₂': '2', '₃': '3', '₄': '4', '₅': '5', '₆': '6', '₇': '7', '₈': '8', '₉': '9', 'ₙ': 'n',
+  };
+  const superscriptMap: Record<string, string> = {
+    '⁰': '0', '¹': '1', '²': '2', '³': '3', '⁴': '4', '⁵': '5', '⁶': '6', '⁷': '7', '⁸': '8', '⁹': '9', 'ⁿ': 'n', 'ᵐ': 'm',
+  };
+
+  result = result.replace(/[₀₁₂₃₄₅₆₇₈₉ₙ]/g, (match) => `_{${subscriptMap[match] ?? match}}`);
+  result = result.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹ⁿᵐ]/g, (match) => `^{${superscriptMap[match] ?? match}}`);
+
+  // 9. Clean up extra spaces before/after operators
   result = result.replace(/\s+\\times\s+/g, ' \\times ');
   result = result.replace(/\s+\\div\s+/g, ' \\div ');
 
