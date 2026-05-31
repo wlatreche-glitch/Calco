@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { CheckCircle2, AlertCircle, Lightbulb, ArrowLeft } from 'lucide-react';
 import { SolutionStep, SolverResult } from '@/lib/mathEngine';
+import { MathContent } from '@/components/MathContent';
 
 interface SolutionStepsProps {
   result: SolverResult;
@@ -35,26 +36,20 @@ export default function SolutionSteps({ result, showDetailed = true }: SolutionS
           <CheckCircle2 className="w-6 h-6 text-success" />
           <div>
             <p className="text-sm text-muted-foreground">النتيجة</p>
-            <p className="text-xl font-bold math-display" dir="ltr">{result.result}</p>
+            <div className="text-xl font-bold math-display" dir="ltr">
+              <MathContent content={result.result} />
+            </div>
           </div>
+        </div>
+
+        <h3 className="text-sm font-bold text-muted-foreground">خطوات الحل</h3>
+
+        <div className="space-y-3">
+          {result.steps.map((step, index) => (
+            <StepCard key={index} step={step} index={index} total={result.steps.length} />
+          ))}
         </div>
       </motion.div>
-
-      {/* Detailed Steps */}
-      {showDetailed && result.steps.length > 0 && (
-        <div className="space-y-3">
-          <h3 className="font-semibold flex items-center gap-2">
-            <Lightbulb className="w-5 h-5 text-warning" />
-            خطوات الحل
-          </h3>
-          
-          <div className="space-y-3">
-            {result.steps.map((step, index) => (
-              <StepCard key={index} step={step} index={index} total={result.steps.length} />
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   );
 }
@@ -89,7 +84,9 @@ function StepCard({ step, index, total }: { step: SolutionStep; index: number; t
           </div>
           
           <div className="p-3 rounded-lg bg-background border border-border/50 mb-2">
-            <code className="text-base math-display" dir="ltr">{step.expression}</code>
+            <div className="text-base math-display" dir="ltr">
+              <MathContent content={step.expression} />
+            </div>
           </div>
           
           <p className="text-sm text-muted-foreground">{step.explanation}</p>

@@ -44,11 +44,7 @@ export const MathBlockArabic = memo(function MathBlockArabic({
       
       <div
         dir="ltr"
-        className="overflow-x-auto py-4 px-2 text-center rounded-lg bg-white/3 border border-white/5"
-        style={{
-          direction: 'ltr',
-          unicodeBidi: 'isolate',
-        }}
+        className="overflow-x-auto py-4 px-2 text-center rounded-lg bg-white/3 border border-white/5 math-isolate"
       >
         <BlockMath math={math} />
       </div>

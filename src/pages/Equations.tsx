@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import MathInput from '@/components/MathInput';
 import SolutionSteps from '@/components/SolutionSteps';
 import NavigationBreadcrumb from '@/components/NavigationBreadcrumb';
+import { MathContent } from '@/components/MathContent';
 import { solveEquation, simplifyExpression, SolverResult } from '@/lib/mathEngine';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
@@ -161,7 +162,7 @@ export default function Equations() {
             المعادلات الخطية
           </h3>
           <p className="text-sm text-muted-foreground mb-3">
-            الصيغة العامة: <code className="math-display">ax + b = c</code>
+            الصيغة العامة: <span className="math-display"><MathContent content="ax + b = c" /></span>
           </p>
           <p className="text-sm text-secondary-foreground">
             لحل المعادلة الخطية، نعزل المتغير x بنقل الحدود الثابتة إلى الطرف الآخر.
@@ -176,7 +177,7 @@ export default function Equations() {
             المعادلات التربيعية
           </h3>
           <p className="text-sm text-muted-foreground mb-3">
-            الصيغة العامة: <code className="math-display">ax² + bx + c = 0</code>
+            الصيغة العامة: <span className="math-display"><MathContent content="ax^2 + bx + c = 0" /></span>
           </p>
           <p className="text-sm text-secondary-foreground">
             نستخدم صيغة المميز Δ = b² - 4ac لتحديد عدد الحلول وطبيعتها.

@@ -65,11 +65,7 @@ export const StepExplanation = memo(function StepExplanation({
       {/* Mathematical Derivation */}
       <div
         dir="ltr"
-        className="overflow-x-auto py-4 px-2 text-center rounded-lg bg-white/5 border border-white/8"
-        style={{
-          direction: 'ltr',
-          unicodeBidi: 'isolate',
-        }}
+        className="overflow-x-auto py-4 px-2 text-center rounded-lg bg-white/5 border border-white/8 math-isolate"
       >
         <BlockMath math={math} />
       </div>

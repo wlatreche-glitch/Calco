@@ -72,11 +72,7 @@ export const ScienceCard = memo(function ScienceCard({
         <div className="text-right">
           <span
             dir="ltr"
-            style={{
-              direction: 'ltr',
-              unicodeBidi: 'isolate',
-              display: 'inline-block',
-            }}
+            className="inline-block math-isolate"
           >
             <InlineMath math={inlineMath} />
           </span>
@@ -87,11 +83,7 @@ export const ScienceCard = memo(function ScienceCard({
       {blockMath && (
         <div
           dir="ltr"
-          className="overflow-x-auto py-4 px-2 text-center rounded-lg bg-white/3 border border-white/10"
-          style={{
-            direction: 'ltr',
-            unicodeBidi: 'isolate',
-          }}
+          className="overflow-x-auto py-4 px-2 text-center rounded-lg bg-white/3 border border-white/10 math-isolate"
         >
           <BlockMath math={blockMath} />
         </div>

@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { BarChart3, Plus, Trash2, Calculator } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import NavigationBreadcrumb from '@/components/NavigationBreadcrumb';
+import { MathContent } from '@/components/MathContent';
 import {
   BarChart,
   Bar,
@@ -167,6 +168,8 @@ export default function Statistics() {
                   <td className="py-2 px-4">
                     <input
                       type="number"
+                      aria-label={`قيمة x${index + 1}`}
+                      title={`قيمة x${index + 1}`}
                       value={point.value}
                       onChange={(e) => updateDataPoint(index, 'value', Number(e.target.value))}
                       className="w-24 px-3 py-1 rounded-lg border border-border bg-background text-center"
@@ -176,6 +179,8 @@ export default function Statistics() {
                     <input
                       type="number"
                       min="1"
+                      aria-label={`تكرار n${index + 1}`}
+                      title={`تكرار n${index + 1}`}
                       value={point.frequency}
                       onChange={(e) => updateDataPoint(index, 'frequency', Math.max(1, Number(e.target.value)))}
                       className="w-24 px-3 py-1 rounded-lg border border-border bg-background text-center"
@@ -186,6 +191,8 @@ export default function Statistics() {
                       onClick={() => removeDataPoint(index)}
                       className="p-1 rounded hover:bg-destructive/20"
                       disabled={data.length <= 1}
+                      aria-label="حذف قيمة"
+                      title="حذف قيمة"
                     >
                       <Trash2 className="w-4 h-4 text-destructive" />
                     </button>
@@ -305,17 +312,23 @@ export default function Statistics() {
           <div className="space-y-3">
             <div className="p-3 rounded-lg bg-secondary/50">
               <p className="text-sm text-muted-foreground">المتوسط الحسابي:</p>
-              <p className="math-display">x̄ = Σ(xᵢ × nᵢ) / Σnᵢ</p>
+              <div className="math-display">
+                <MathContent content="\bar{x} = \frac{\sum (x_i \times n_i)}{\sum n_i}" />
+              </div>
             </div>
             <div className="p-3 rounded-lg bg-secondary/50">
               <p className="text-sm text-muted-foreground">التباين:</p>
-              <p className="math-display">σ² = Σ(xᵢ - x̄)² × nᵢ / Σnᵢ</p>
+              <div className="math-display">
+                <MathContent content="\sigma^2 = \frac{\sum \left(x_i - \bar{x}\right)^2 \times n_i}{\sum n_i}" />
+              </div>
             </div>
           </div>
           <div className="space-y-3">
             <div className="p-3 rounded-lg bg-secondary/50">
               <p className="text-sm text-muted-foreground">الانحراف المعياري:</p>
-              <p className="math-display">σ = √(σ²)</p>
+              <div className="math-display">
+                <MathContent content="\sigma = \sqrt{\sigma^2}" />
+              </div>
             </div>
             <div className="p-3 rounded-lg bg-secondary/50">
               <p className="text-sm text-muted-foreground">الوسيط:</p>

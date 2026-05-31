@@ -31,11 +31,7 @@ export const InlineMathArabic = memo(function InlineMathArabic({
   return (
     <span
       dir="ltr"
-      className={`inline-block align-middle mx-1 max-w-full overflow-x-auto ${className}`}
-      style={{
-        direction: 'ltr',
-        unicodeBidi: 'isolate',
-      }}
+      className={`inline-block align-middle mx-1 max-w-full overflow-x-auto math-isolate ${className}`}
     >
       <InlineMath math={math} />
     </span>

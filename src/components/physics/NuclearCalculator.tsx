@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Badge } from '@/components/ui/badge';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { PedagogyMode } from '@/lib/physicsEngine';
+import { MathContent } from '@/components/MathContent';
 
 interface Props {
   mode: PedagogyMode;
@@ -371,7 +372,9 @@ export default function NuclearCalculator({ mode }: Props) {
               <CardContent className="space-y-4">
                 <div className="p-4 rounded-xl bg-gradient-to-br from-green-500/10 to-emerald-500/10 border border-green-500/20">
                   <p className="text-sm text-muted-foreground mb-1">القانون</p>
-                  <p className="font-mono font-bold text-primary">{result.formula}</p>
+                  <div className="font-bold text-primary mx-auto max-w-full">
+                    <MathContent content={result.formula} />
+                  </div>
                   <p className="text-3xl font-bold text-green-600 mt-2">
                     {result.value.toExponential(4)} {result.unit}
                   </p>

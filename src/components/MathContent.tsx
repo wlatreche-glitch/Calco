@@ -22,8 +22,20 @@ function normalizeMathNotation(s: string): string {
     // x^(...) -> x^{...}
     .replace(/\^\(([^()]+)\)/g, "^{$1}")
     // x_(...) -> x_{...}
-    .replace(/_\(([^()]+)\)/g, "_{$1}")
-    // unicode operators
+    .replace(/_\(([^()]+)\)/g, "_{$1}")    // unicode subscripts
+    .replace(/[₀₁₂₃₄₅₆₇₈₉ₙ]/g, (match) => {
+      const map: Record<string, string> = {
+        '₀': '0', '₁': '1', '₂': '2', '₃': '3', '₄': '4', '₅': '5', '₆': '6', '₇': '7', '₈': '8', '₉': '9', 'ₙ': 'n',
+      };
+      return `_{${map[match] ?? match}}`;
+    })
+    // unicode superscripts
+    .replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹ⁿᵐ]/g, (match) => {
+      const map: Record<string, string> = {
+        '⁰': '0', '¹': '1', '²': '2', '³': '3', '⁴': '4', '⁵': '5', '⁶': '6', '⁷': '7', '⁸': '8', '⁹': '9', 'ⁿ': 'n', 'ᵐ': 'm',
+      };
+      return `^{${map[match] ?? match}}`;
+    })    // unicode operators
     .replace(/×/g, "\\times ")
     .replace(/÷/g, "\\div ")
     .replace(/·/g, "\\cdot ")

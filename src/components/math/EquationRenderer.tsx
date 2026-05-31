@@ -64,11 +64,7 @@ export const EquationRenderer = memo(function EquationRenderer({
 
       <div
         dir="ltr"
-        className="overflow-x-auto py-5 px-3 text-center rounded-lg bg-white/3 border border-white/8"
-        style={{
-          direction: 'ltr',
-          unicodeBidi: 'isolate',
-        }}
+        className="overflow-x-auto py-5 px-3 text-center rounded-lg bg-white/3 border border-white/8 math-isolate"
       >
         <BlockMath math={fullEquation} />
       </div>

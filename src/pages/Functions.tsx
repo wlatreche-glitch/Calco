@@ -14,6 +14,7 @@ import { analyzeFunction, FunctionAnalysis } from '@/lib/functionAnalysis';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
+import { MathContent } from '@/components/MathContent';
 
 const derivativeExamples = [
   'x^2',
@@ -155,9 +156,9 @@ export default function Functions() {
             <div className="text-sm text-muted-foreground space-y-1">
               <p>💡 <strong>قواعد الاشتقاق الأساسية:</strong></p>
               <ul className="list-disc list-inside mr-4 space-y-1">
-                <li><code className="math-display">(xⁿ)' = n·xⁿ⁻¹</code></li>
-                <li><code className="math-display">(f + g)' = f' + g'</code></li>
-                <li><code className="math-display">(c·f)' = c·f'</code></li>
+                <li><MathContent content="(x^n)' = n \cdot x^{n - 1}" /></li>
+                <li><MathContent content="(f + g)' = f' + g'" /></li>
+                <li><MathContent content="(c \cdot f)' = c \cdot f'" /></li>
               </ul>
             </div>
           </TabsContent>
@@ -173,8 +174,8 @@ export default function Functions() {
             <div className="text-sm text-muted-foreground space-y-1">
               <p>💡 <strong>قواعد التكامل الأساسية:</strong></p>
               <ul className="list-disc list-inside mr-4 space-y-1">
-                <li><code className="math-display">∫xⁿ dx = xⁿ⁺¹/(n+1) + C</code></li>
-                <li><code className="math-display">∫(f + g) dx = ∫f dx + ∫g dx</code></li>
+                <li><MathContent content="\int x^n \, dx = \frac{x^{n + 1}}{n + 1} + C" /></li>
+                <li><MathContent content="\int (f + g) \, dx = \int f \, dx + \int g \, dx" /></li>
               </ul>
             </div>
           </TabsContent>

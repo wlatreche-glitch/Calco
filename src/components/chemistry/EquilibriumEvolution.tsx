@@ -14,6 +14,7 @@ import {
 import { Switch } from '@/components/ui/switch';
 import { FlaskConical, Calculator, Lightbulb, AlertTriangle, CheckCircle2, BookOpen, Sparkles, XCircle, HelpCircle } from 'lucide-react';
 import { solveEquilibrium, type SystemType, type EquilibriumInput } from '@/lib/chemistryEngine';
+import { MathContent } from '@/components/MathContent';
 import SmartEquationBuilder from './SmartEquationBuilder';
 import type { ParsedEquation } from '@/lib/equationParser';
 import DynamicInputPanel from './DynamicInputPanel';
@@ -443,9 +444,11 @@ export default function EquilibriumEvolution() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <ul className="space-y-2 text-sm font-mono" dir="ltr">
+              <ul className="space-y-2 text-sm" dir="ltr">
                 {result.formulas.map((f, i) => (
-                  <li key={i} className="p-2 rounded bg-secondary/50">{f}</li>
+                  <li key={i} className="p-2 rounded bg-secondary/50">
+                    <MathContent content={f} />
+                  </li>
                 ))}
               </ul>
             </CardContent>
