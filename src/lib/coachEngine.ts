@@ -1,5 +1,5 @@
-export type QSegment = { text?: string; math?: string };
-export type QContent = string | QSegment[];
+export type QSegment = { text?: string; math?: string; display?: boolean };
+export type QContent = string | QSegment | QSegment[];
 
 export type QuizQuestion = {
   unit: string;
@@ -68,7 +68,24 @@ export const UNIT_AR: Record<string, string> = {
 };
 
 export function unitAr(u: string) {
-  return UNIT_AR[u] ?? u;
+  const labels: Record<string, string> = {
+    Electricity: 'الكهرباء',
+    Motion: 'الحركة',
+    Energy: 'الطاقة',
+    Waves: 'الموجات',
+    General: 'عام',
+    Mole: 'المول',
+    Reactions: 'التفاعلات',
+    pH: 'الـ pH',
+    Concentration: 'التركيز',
+    Functions: 'الدوال',
+    Derivatives: 'المشتقات',
+    Integrals: 'التكاملات',
+    Probability: 'الاحتمالات',
+    Limits: 'النهايات',
+  };
+
+  return labels[u] ?? UNIT_AR[u] ?? u;
 }
 
 export function calcoFeedback(units: UnitStat[]): { lines: string[]; main: string } {
@@ -176,14 +193,22 @@ const PHYSICS_QUESTIONS: QuizQuestion[] = [
     q: 'مقاومة كهربائية 10 Ω وتيار 2 A. ما الجهد؟',
     options: ['5 V', '10 V', '20 V', '40 V'],
     answer: 2,
-    explain: 'الجهد = المقاومة × التيار = 10 × 2 = 20 V (قانون أوم)',
+    explain: [
+      { math: 'V = R \\times I', display: true },
+      { text: 'قانون أوم: الجهد = المقاومة × التيار' },
+      { math: 'V = 10 \\times 2 = 20\\text{ V}', display: true },
+    ],
   },
   {
     unit: 'Electricity',
     q: 'قدرة كهربائية 100 W وجهد 50 V. ما التيار؟',
     options: ['0.5 A', '1 A', '2 A', '5 A'],
     answer: 2,
-    explain: 'التيار = القدرة / الجهد = 100/50 = 2 A',
+    explain: [
+      { math: 'I = \\frac{P}{V}', display: true },
+      { text: 'التيار = القدرة ÷ الجهد' },
+      { math: 'I = \\frac{100}{50} = 2\\text{ A}', display: true },
+    ],
   },
   {
     unit: 'General',
@@ -370,8 +395,387 @@ const MATH_QUESTIONS: QuizQuestion[] = [
   },
 ];
 
+type QuizSubject = 'physics' | 'chemistry' | 'math';
+
+function randomInt(min: number, max: number): number {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function pick<T>(items: T[]): T {
+  return items[randomInt(0, items.length - 1)];
+}
+
+function shuffle<T>(items: T[]): T[] {
+  const copy = [...items];
+  for (let i = copy.length - 1; i > 0; i -= 1) {
+    const j = randomInt(0, i);
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
+
+function formatNumber(value: number): string {
+  return Number.isInteger(value) ? `${value}` : value.toFixed(2).replace(/\.?0+$/, '');
+}
+
+function makeQuestion(
+  unit: string,
+  q: QContent,
+  correct: QContent,
+  distractors: QContent[],
+  explain: QContent
+): QuizQuestion {
+  const correctKey = JSON.stringify(correct);
+  const uniqueDistractors = Array.from(
+    new Map(
+      distractors
+        .filter((value) => JSON.stringify(value) !== correctKey)
+        .map((value) => [JSON.stringify(value), value])
+    ).values()
+  );
+  const options = shuffle([
+    { value: correct, correct: true },
+    ...uniqueDistractors.slice(0, 3).map((value) => ({ value, correct: false })),
+  ]);
+
+  return {
+    unit,
+    q,
+    options: options.map((option) => option.value),
+    answer: options.findIndex((option) => option.correct),
+    explain,
+  };
+}
+
+function numericQuestion(
+  unit: string,
+  q: QContent,
+  answer: number,
+  unitLabel: string,
+  explain: QContent
+): QuizQuestion {
+  const step = Math.max(1, Math.round(Math.abs(answer) * 0.2));
+  const values = new Set<number>();
+  [answer - step, answer + step, answer + step * 2, answer - step * 2, answer + 1]
+    .filter((value) => value > 0 && value !== answer)
+    .forEach((value) => values.add(value));
+
+  while (values.size < 3) {
+    const offset = randomInt(1, Math.max(3, step * 3));
+    values.add(answer + offset);
+  }
+
+  const format = (value: number) => `${formatNumber(value)} ${unitLabel}`.trim();
+  return makeQuestion(unit, q, format(answer), Array.from(values).slice(0, 3).map(format), explain);
+}
+
+function signedTerm(value: number): string {
+  if (value === 0) return '';
+  return value > 0 ? `+ ${value}` : `- ${Math.abs(value)}`;
+}
+
+function variableTerm(coefficient: number, variable = 'x'): string {
+  if (coefficient === 0) return '';
+  const abs = Math.abs(coefficient);
+  const coefficientText = abs === 1 ? variable : `${abs}${variable}`;
+  return coefficient > 0 ? `+ ${coefficientText}` : `- ${coefficientText}`;
+}
+
+function linearExpression(slope: number, intercept: number): string {
+  const slopeText = slope === 1 ? 'x' : slope === -1 ? '-x' : `${slope}x`;
+  const interceptText = signedTerm(intercept);
+  return `${slopeText}${interceptText ? ` ${interceptText}` : ''}`;
+}
+
+function quadraticExpression(a: number, b: number, c: number): string {
+  const leading = a === 1 ? 'x^2' : a === -1 ? '-x^2' : `${a}x^2`;
+  return [leading, variableTerm(b), signedTerm(c)].filter(Boolean).join(' ');
+}
+
+function gcd(a: number, b: number): number {
+  return b === 0 ? Math.abs(a) : gcd(b, a % b);
+}
+
+function fraction(numerator: number, denominator: number): string {
+  const divisor = gcd(numerator, denominator);
+  return `${numerator / divisor}/${denominator / divisor}`;
+}
+
+function physicsVariant(base: QuizQuestion): QuizQuestion {
+  if (base.unit === 'Motion') {
+    if (Math.random() < 0.5) {
+      const speed = randomInt(6, 32);
+      const time = randomInt(2, 12);
+      const distance = speed * time;
+      return numericQuestion(
+        'Motion',
+        [
+          { text: 'احسب المسافة d التي يقطعها جسم يتحرك بسرعة ثابتة:' },
+          { math: `v=${speed}\\text{ m/s},\\quad t=${time}\\text{ s}` },
+        ],
+        distance,
+        'm',
+        [
+          { text: 'نستعمل العلاقة:' },
+          { math: `d=${speed}\\times ${time}=${distance}\\text{ m}` },
+        ]
+      );
+    }
+
+    const acceleration = randomInt(2, 8);
+    const time = randomInt(2, 6);
+    const finalSpeed = acceleration * time;
+    return numericQuestion(
+      'Motion',
+      [
+        { text: 'احسب التسارع a لجسم انطلق من السكون:' },
+        { math: `v_f=${finalSpeed}\\text{ m/s},\\quad t=${time}\\text{ s}` },
+      ],
+      acceleration,
+      'm/s^2',
+      [
+        { text: 'نستعمل العلاقة:' },
+        { math: `a=\\frac{\\Delta v}{\\Delta t}=\\frac{${finalSpeed}-0}{${time}}=${acceleration}\\text{ m/s}^2` },
+      ]
+    );
+  }
+
+  if (base.unit === 'Energy') {
+    if (Math.random() < 0.5) {
+      const mass = randomInt(1, 6) * 2;
+      const speed = randomInt(2, 10);
+      const energy = 0.5 * mass * speed ** 2;
+      return numericQuestion(
+        'Energy',
+        [
+          { text: 'احسب الطاقة الحركية E_c لجسم معطياته:' },
+          { math: `m=${mass}\\text{ kg},\\quad v=${speed}\\text{ m/s}` },
+        ],
+        energy,
+        'J',
+        [
+          { text: 'نستعمل العلاقة:' },
+          { math: `E_c=\\frac{1}{2}mv^2=\\frac{1}{2}\\times ${mass}\\times ${speed}^2=${energy}\\text{ J}` },
+        ]
+      );
+    }
+
+    const mass = randomInt(1, 10);
+    const height = randomInt(2, 20);
+    const energy = mass * 10 * height;
+    return numericQuestion(
+      'Energy',
+      [
+        { text: 'احسب الطاقة الكامنة الثقالية E_p باستعمال g = 10 m/s^2:' },
+        { math: `m=${mass}\\text{ kg},\\quad h=${height}\\text{ m}` },
+      ],
+      energy,
+      'J',
+      [
+        { text: 'نستعمل العلاقة:' },
+        { math: `E_p=mgh=${mass}\\times 10\\times ${height}=${energy}\\text{ J}` },
+      ]
+    );
+  }
+
+  if (base.unit === 'Waves') {
+    const frequency = randomInt(2, 18) * 5;
+    const wavelength = randomInt(1, 8);
+    const speed = frequency * wavelength;
+    return numericQuestion(
+      'Waves',
+      [
+        { text: 'احسب سرعة انتشار الموجة v:' },
+        { math: `f=${frequency}\\text{ Hz},\\quad \\lambda=${wavelength}\\text{ m}` },
+      ],
+      speed,
+      'm/s',
+      [
+        { text: 'نستعمل العلاقة:' },
+        { math: `v=f\\lambda=${frequency}\\times ${wavelength}=${speed}\\text{ m/s}` },
+      ]
+    );
+  }
+
+  if (base.unit === 'Electricity') {
+    if (Math.random() < 0.5) {
+      const resistance = randomInt(2, 20);
+      const current = randomInt(1, 8);
+      const voltage = resistance * current;
+      return numericQuestion(
+        'Electricity',
+        [
+          { text: 'احسب التوتر الكهربائي U بين طرفي ناقل أومي:' },
+          { math: `R=${resistance}\\Omega,\\quad I=${current}\\text{ A}` },
+        ],
+        voltage,
+        'V',
+        [
+          { text: 'نستعمل قانون أوم:' },
+          { math: `U=RI=${resistance}\\times ${current}=${voltage}\\text{ V}` },
+        ]
+      );
+    }
+
+    const voltage = pick([10, 20, 25, 50, 100]);
+    const current = randomInt(1, 8);
+    const power = voltage * current;
+    return numericQuestion(
+      'Electricity',
+      [
+        { text: 'احسب شدة التيار الكهربائي I:' },
+        { math: `P=${power}\\text{ W},\\quad V=${voltage}\\text{ V}` },
+      ],
+      current,
+      'A',
+      [
+        { text: 'نستعمل علاقة الاستطاعة الكهربائية:' },
+        { math: `P=UI\\Rightarrow I=\\frac{P}{U}=\\frac{${power}}{${voltage}}=${current}\\text{ A}` },
+      ]
+    );
+  }
+
+  if (base.unit === 'General') {
+    const mass = randomInt(1, 12);
+    const weight = mass * 10;
+    return numericQuestion(
+      'General',
+      [
+        { text: 'احسب ثقل جسم P على سطح الأرض باستعمال g = 10 m/s^2:' },
+        { math: `m=${mass}\\text{ kg}` },
+      ],
+      weight,
+      'N',
+      [
+        { text: 'نستعمل العلاقة:' },
+        { math: `P=mg=${mass}\\times 10=${weight}\\text{ N}` },
+      ]
+    );
+  }
+
+  return base;
+}
+
+function mathVariant(base: QuizQuestion): QuizQuestion {
+  if (base.unit === 'Functions') {
+    const a = randomInt(1, 6) * pick([-1, 1]);
+    const b = randomInt(-8, 8);
+    const x = randomInt(-5, 8);
+    const answer = a * x + b;
+    return numericQuestion(
+      'Functions',
+      [
+        { text: 'احسب قيمة الدالة عند العدد المعطى:' },
+        { math: `f(x)=${linearExpression(a, b)},\\quad f(${x})=?` },
+      ],
+      answer,
+      '',
+      [
+        { text: 'نعوض x بالقيمة المعطاة:' },
+        { math: `f(${x})=${a}\\times ${x}${signedTerm(b) ? ` ${signedTerm(b)}` : ''}=${answer}` },
+      ]
+    );
+  }
+
+  if (base.unit === 'Derivatives') {
+    const a = randomInt(1, 5);
+    const b = randomInt(-6, 6);
+    let c = randomInt(-8, 8);
+    while (c === b) {
+      c = randomInt(-8, 8);
+    }
+    const correct = linearExpression(2 * a, b);
+    return makeQuestion(
+      'Derivatives',
+      [
+        { text: 'احسب مشتقة الدالة:' },
+        { math: `f(x)=${quadraticExpression(a, b, c)}` },
+      ],
+      correct,
+      [
+        linearExpression(a, b),
+        `${2 * a}x^2 ${signedTerm(b)}`,
+        linearExpression(2 * a, c),
+      ],
+      [
+        { text: 'نستعمل قواعد الاشتقاق:' },
+        { math: `f'(x)=${correct}` },
+      ]
+    );
+  }
+
+  if (base.unit === 'Integrals') {
+    const a = randomInt(1, 6) * 2;
+    const correct = `${a / 2}x^2 + C`;
+    return makeQuestion(
+      'Integrals',
+      [
+        { text: 'احسب التكامل غير المحدد:' },
+        { math: `\\int ${a}x\\,dx` },
+      ],
+      correct,
+      [`${a}x^2 + C`, `${a / 2}x + C`, `${a / 2}x^2`],
+      [
+        { text: 'نزيد الأس بدرجة واحدة ثم نقسم على الأس الجديد، ونضيف الثابت C:' },
+        { math: `\\int ${a}x\\,dx=${correct}` },
+      ]
+    );
+  }
+
+  if (base.unit === 'Limits') {
+    const a = randomInt(-4, 5);
+    const m = randomInt(-5, 5) || 2;
+    const b = randomInt(-8, 8);
+    const answer = m * a + b;
+    return numericQuestion(
+      'Limits',
+      [
+        { text: 'احسب النهاية:' },
+        { math: `\\lim_{x\\to ${a}}(${linearExpression(m, b)})` },
+      ],
+      answer,
+      '',
+      [
+        { text: 'بما أن الدالة خطية، نعوض مباشرة:' },
+        { math: `${m}\\times ${a}${signedTerm(b) ? ` ${signedTerm(b)}` : ''}=${answer}` },
+      ]
+    );
+  }
+
+  if (base.unit === 'Probability') {
+    const total = randomInt(5, 12);
+    const success = randomInt(1, total - 1);
+    const correct = fraction(success, total);
+    const distractors = new Set<string>();
+    while (distractors.size < 3) {
+      const alt = randomInt(1, total - 1);
+      const value = fraction(alt, total);
+      if (value !== correct) distractors.add(value);
+    }
+
+    return makeQuestion(
+      'Probability',
+      `في صندوق يحتوي على ${total} كرات، منها ${success} كرات حمراء. ما احتمال سحب كرة حمراء؟`,
+      correct,
+      Array.from(distractors),
+      [
+        { text: 'الاحتمال يساوي عدد الحالات الملائمة على عدد الحالات الممكنة:' },
+        { math: `P=\\frac{${success}}{${total}}=${correct}` },
+      ]
+    );
+  }
+
+  return base;
+}
+
+function createQuestionVariant(subject: QuizSubject, question: QuizQuestion): QuizQuestion {
+  if (subject === 'physics') return physicsVariant(question);
+  if (subject === 'math') return mathVariant(question);
+  return question;
+}
+
 export function generateQuiz(
-  subject: 'physics' | 'chemistry' | 'math',
+  subject: QuizSubject,
   unit?: string,
   count = 10,
   _difficulty?: string
@@ -392,12 +796,18 @@ export function generateQuiz(
 
   const selected: QuizQuestion[] = [];
   const indices = new Set<number>();
+  const canGenerateVariants = subject === 'physics' || subject === 'math';
+  const targetCount = canGenerateVariants ? count : Math.min(count, filtered.length);
 
-  while (selected.length < Math.min(count, filtered.length)) {
+  while (selected.length < targetCount) {
+    if (indices.size >= filtered.length) {
+      indices.clear();
+    }
+
     const idx = Math.floor(Math.random() * filtered.length);
     if (!indices.has(idx)) {
       indices.add(idx);
-      selected.push(filtered[idx]);
+      selected.push(createQuestionVariant(subject, filtered[idx]));
     }
   }
 

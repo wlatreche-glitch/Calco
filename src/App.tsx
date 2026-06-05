@@ -24,6 +24,7 @@ const BEMMath = lazy(() => import("./pages/BEMMath"));
 const BEMPhysics = lazy(() => import("./pages/BEMPhysics"));
 const BACChemistry = lazy(() => import("./pages/BACChemistry"));
 const CalcoCoach = lazy(() => import("./pages/CalcoCoach"));
+const Quiz = lazy(() => import("./pages/Quiz"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Terms = lazy(() => import("./pages/Terms"));
 const Privacy = lazy(() => import("./pages/Privacy"));
@@ -51,6 +52,7 @@ const App = () => (
               <Route path="/bem-physics" element={<BEMPhysics />} />
               <Route path="/bac-chemistry" element={<BACChemistry />} />
               <Route path="/coach" element={<CalcoCoach />} />
+              <Route path="/quiz" element={<Quiz />} />
               <Route path="/matrices" element={<Matrices />} />
               <Route path="/sequences" element={<Sequences />} />
               <Route path="/statistics" element={<Statistics />} />

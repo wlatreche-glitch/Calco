@@ -137,19 +137,27 @@ function MathContentInner({ content, className = "", asSteps = false }: Props) {
   if (asSteps) {
     return (
       <div className={`space-y-3 ${className}`} dir="rtl">
-        {segments.map((seg, i) =>
-          seg.math ? (
-            <div
-              key={i}
-              dir="ltr"
-              className="my-2 max-w-full overflow-x-auto overflow-y-hidden py-3 px-3 rounded-lg bg-white/5 border border-white/10 text-center"
-            >
-              <BlockMath math={seg.math} />
-            </div>
-          ) : (
-            <p key={i} className="leading-relaxed text-right" dir="rtl">{seg.text}</p>
-          )
-        )}
+        {segments.map((seg, i) => {
+          if (seg.math) {
+            // For display formulas in steps mode, show them in centered boxes
+            return (
+              <div
+                key={i}
+                dir="ltr"
+                className="my-2 max-w-full overflow-x-auto overflow-y-hidden py-4 px-4 rounded-lg bg-white/10 border border-white/20 text-center flex items-center justify-center min-h-14"
+              >
+                <div className="inline-block">
+                  <BlockMath math={seg.math} />
+                </div>
+              </div>
+            );
+          }
+          return (
+            <p key={i} className="leading-relaxed text-right text-slate-200" dir="rtl">
+              {seg.text}
+            </p>
+          );
+        })}
       </div>
     );
   }
