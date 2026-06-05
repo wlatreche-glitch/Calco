@@ -308,9 +308,14 @@ function QuizView({
         </div>
 
         {reveal && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-4 p-3 rounded-xl bg-white/5 border border-white/10 text-sm">
-            <div className="font-bold mb-2">💡 شرح:</div>
-            <MathContent content={q.explain} asSteps />
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-4 p-3 rounded-xl bg-white/5 border border-white/10 text-sm space-y-3">
+            <div className="font-bold mb-3 flex items-center gap-2">
+              <span>💡</span>
+              <span>شرح:</span>
+            </div>
+            <div className="space-y-3">
+              <MathContent content={q.explain} asSteps />
+            </div>
           </motion.div>
         )}
       </div>
