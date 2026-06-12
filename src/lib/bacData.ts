@@ -13,78 +13,130 @@ export interface Stream {
   subjects: Subject[];
 }
 
-const COMMON = (extra: Subject[]): Subject[] => [
-  ...extra,
-  { id: 'ar', name: 'اللغة العربية', nameFr: 'Arabe', coef: 2 },
-  { id: 'fr', name: 'اللغة الفرنسية', nameFr: 'Français', coef: 2 },
-  { id: 'en', name: 'اللغة الإنجليزية', nameFr: 'Anglais', coef: 2 },
-  { id: 'hg', name: 'التاريخ والجغرافيا', nameFr: 'Histoire-Géo', coef: 2 },
-  { id: 'is', name: 'العلوم الإسلامية', nameFr: 'Sciences Islamiques', coef: 2 },
-  { id: 'ph', name: 'الفلسفة', nameFr: 'Philosophie', coef: 2 },
-  { id: 'sp', name: 'التربية البدنية', nameFr: 'Sport', coef: 1 },
-];
 
 export const STREAMS: Stream[] = [
+  // ==========================
+  // SCIENCES EXPÉRIMENTALES
+  // ==========================
   {
-    id: 'sci',
-    name: 'علوم تجريبية',
-    emoji: '🧪',
-    subjects: COMMON([
-      { id: 'math', name: 'الرياضيات', nameFr: 'Maths', coef: 5 },
-      { id: 'svt', name: 'علوم الطبيعة والحياة', nameFr: 'SVT', coef: 6 },
-      { id: 'phy', name: 'العلوم الفيزيائية', nameFr: 'Physique', coef: 5 },
-    ]),
+    id: "sci",
+    name: "علوم تجريبية",
+    emoji: "🧪",
+    subjects: [
+     { id: "svt",  name: "علوم الطبيعة والحياة", nameFr: "SVT", coef: 6 },
+     { id: "phy",  name: "العلوم الفيزيائية",    nameFr: "Physique", coef: 5 },
+     { id: "math", name: "الرياضيات",            nameFr: "Mathématiques", coef: 5 },
+
+     { id: "ar",   name: "اللغة العربية",        nameFr: "Arabe", coef: 3 },
+     { id: "fr",   name: "اللغة الفرنسية",      nameFr: "Français", coef: 2 },
+     { id: "en",   name: "اللغة الإنجليزية",    nameFr: "Anglais", coef: 2 },
+
+     { id: "hg",   name: "التاريخ والجغرافيا",   nameFr: "Histoire-Géo", coef: 2 },
+     { id: "is",   name: "العلوم الإسلامية",     nameFr: "Sciences Islamiques", coef: 2 },
+     { id: "ph",   name: "الفلسفة",             nameFr: "Philosophie", coef: 2 },
+
+     { id: "sp",   name: "التربية البدنية",      nameFr: "Sport", coef: 1 },
+    ],
   },
+
   {
     id: 'math',
     name: 'رياضيات',
     emoji: '📐',
-    subjects: COMMON([
-      { id: 'math', name: 'الرياضيات', nameFr: 'Maths', coef: 7 },
-      { id: 'phy', name: 'العلوم الفيزيائية', nameFr: 'Physique', coef: 6 },
-      { id: 'svt', name: 'علوم الطبيعة والحياة', nameFr: 'SVT', coef: 2 },
-    ]),
+    subjects: [
+     { id: "math", name: "الرياضيات", nameFr: "Mathématiques", coef: 7 },
+     { id: "phy",  name: "العلوم الفيزيائية", nameFr: "Physique", coef: 6 },
+     { id: "svt",  name: "علوم الطبيعة والحياة", nameFr: "SVT", coef: 2 },
+
+     { id: "ar",   name: "اللغة العربية", nameFr: "Arabe", coef: 3 },
+     { id: "fr",   name: "اللغة الفرنسية", nameFr: "Français", coef: 2 },
+     { id: "en",   name: "اللغة الإنجليزية", nameFr: "Anglais", coef: 2 },
+
+     { id: "hg",   name: "التاريخ والجغرافيا", nameFr: "Histoire-Géo", coef: 2 },
+     { id: "is",   name: "العلوم الإسلامية", nameFr: "Sciences Islamiques", coef: 2 },
+     { id: "ph",   name: "الفلسفة", nameFr: "Philosophie", coef: 2 },
+
+     { id: "sp",   name: "التربية البدنية", nameFr: "Sport", coef: 1 },
+   ],
   },
   {
     id: 'tech',
     name: 'تقني رياضي',
     emoji: '⚙️',
-    subjects: COMMON([
-      { id: 'math', name: 'الرياضيات', nameFr: 'Maths', coef: 6 },
-      { id: 'tech', name: 'التكنولوجيا', nameFr: 'Génie', coef: 7 },
-      { id: 'phy', name: 'العلوم الفيزيائية', nameFr: 'Physique', coef: 5 },
-    ]),
+   subjects: [
+     { id: "tech", name: "التكنولوجيا", nameFr: "Technologie", coef: 7 },
+     { id: "math", name: "الرياضيات", nameFr: "Mathématiques", coef: 6 },
+     { id: "phy",  name: "العلوم الفيزيائية", nameFr: "Physique", coef: 6 },
+
+     { id: "ar", name: "اللغة العربية", nameFr: "Arabe", coef: 3 },
+     { id: "fr", name: "اللغة الفرنسية", nameFr: "Français", coef: 2 },
+     { id: "en", name: "اللغة الإنجليزية", nameFr: "Anglais", coef: 2 },
+
+     { id: "hg", name: "التاريخ والجغرافيا", nameFr: "Histoire-Géo", coef: 2 },
+     { id: "is", name: "العلوم الإسلامية", nameFr: "Sciences Islamiques", coef: 2 },
+     { id: "ph", name: "الفلسفة", nameFr: "Philosophie", coef: 2 },
+
+     { id: "sp", name: "التربية البدنية", nameFr: "Sport", coef: 1 },
+    ],
   },
   {
     id: 'gest',
     name: 'تسيير واقتصاد',
     emoji: '📊',
-    subjects: COMMON([
-      { id: 'math', name: 'الرياضيات', nameFr: 'Maths', coef: 5 },
-      { id: 'eco', name: 'الاقتصاد والمناجمنت', nameFr: 'Économie', coef: 6 },
-      { id: 'dr', name: 'القانون', nameFr: 'Droit', coef: 2 },
-      { id: 'mg', name: 'تسيير محاسبي ومالي', nameFr: 'Gestion', coef: 6 },
-    ]),
+    subjects: [
+     { id: "mg",   name: "التسيير المحاسبي والمالي", nameFr: "Comptabilité-Gestion", coef: 6 },
+     { id: "eco",  name: "الاقتصاد والمناجمنت", nameFr: "Économie-Gestion", coef: 5 },
+     { id: "math", name: "الرياضيات", nameFr: "Mathématiques", coef: 5 },
+     { id: "dr",   name: "القانون", nameFr: "Droit", coef: 2 },
+
+     { id: "ar", name: "اللغة العربية", nameFr: "Arabe", coef: 3 },
+     { id: "fr", name: "اللغة الفرنسية", nameFr: "Français", coef: 2 },
+     { id: "en", name: "اللغة الإنجليزية", nameFr: "Anglais", coef: 2 },
+
+     { id: "hg", name: "التاريخ والجغرافيا", nameFr: "Histoire-Géo", coef: 4 },
+     { id: "is", name: "العلوم الإسلامية", nameFr: "Sciences Islamiques", coef: 2 },
+     { id: "ph", name: "الفلسفة", nameFr: "Philosophie", coef: 2 },
+
+     { id: "sp", name: "التربية البدنية", nameFr: "Sport", coef: 1 },
+    ],
   },
   {
     id: 'lit',
     name: 'آداب وفلسفة',
     emoji: '📖',
-    subjects: COMMON([
-      { id: 'math', name: 'الرياضيات', nameFr: 'Maths', coef: 2 },
-      { id: 'phLit', name: 'الفلسفة', nameFr: 'Philo', coef: 6 },
-      { id: 'arLit', name: 'الأدب العربي', nameFr: 'Littérature', coef: 6 },
-    ]),
+   subjects: [
+     { id: "ar", name: "اللغة العربية", nameFr: "Arabe", coef: 6 },
+     { id: "ph", name: "الفلسفة", nameFr: "Philosophie", coef: 6 },
+
+     { id: "fr", name: "اللغة الفرنسية", nameFr: "Français", coef: 3 },
+     { id: "en", name: "اللغة الإنجليزية", nameFr: "Anglais", coef: 3 },
+
+     { id: "math", name: "الرياضيات", nameFr: "Mathématiques", coef: 2 },
+
+     { id: "hg", name: "التاريخ والجغرافيا", nameFr: "Histoire-Géo", coef: 4 },
+     { id: "is", name: "العلوم الإسلامية", nameFr: "Sciences Islamiques", coef: 2 },
+
+     { id: "sp", name: "التربية البدنية", nameFr: "Sport", coef: 1 },
+    ],
   },
   {
     id: 'lang',
     name: 'لغات أجنبية',
     emoji: '🌍',
-    subjects: COMMON([
-      { id: 'l3', name: 'لغة أجنبية ثالثة', nameFr: 'LV3', coef: 5 },
-      { id: 'arLit', name: 'الأدب العربي', nameFr: 'Littérature', coef: 5 },
-      { id: 'math', name: 'الرياضيات', nameFr: 'Maths', coef: 2 },
-    ]),
+    subjects: [
+     { id: "fr", name: "اللغة الفرنسية", nameFr: "Français", coef: 5 },
+     { id: "en", name: "اللغة الإنجليزية", nameFr: "Anglais", coef: 5 },
+     { id: "l3", name: "اللغة الأجنبية الثالثة", nameFr: "Troisième Langue Étrangère", coef: 4 },
+     { id: "ar", name: "اللغة العربية", nameFr: "Arabe", coef: 5 },
+
+     { id: "math", name: "الرياضيات", nameFr: "Mathématiques", coef: 2 },
+
+     { id: "hg", name: "التاريخ والجغرافيا", nameFr: "Histoire-Géo", coef: 2 },
+     { id: "is", name: "العلوم الإسلامية", nameFr: "Sciences Islamiques", coef: 2 },
+     { id: "ph", name: "الفلسفة", nameFr: "Philosophie", coef: 2 },
+
+     { id: "sp", name: "التربية البدنية", nameFr: "Sport", coef: 1 },
+    ],
   },
 ];
 
