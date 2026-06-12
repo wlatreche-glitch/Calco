@@ -1,0 +1,139 @@
+Attached Element Context from Integrated Browser
+
+Element: div.rounded-3xl.p-5.bg-white/5.backdrop-blur.border.border-white/10.shadow-2xl
+
+URL: http://localhost:8080/coach
+
+HTML Path: div#root > div.min-h-screen.bg-background > main.container.mx-auto.px-4.py-6 > div > div.min-h-[calc(100vh-4rem)].-mx-4.px-4.py-6.bg-gradient-to-br.from-slate-950.via-indigo-950.to-violet-950.text-white > div.max-w-2xl.mx-auto.space-y-5 > div.space-y-4 > div.rounded-3xl.p-5.bg-white/5.backdrop-blur.border.border-white/10.shadow-2xl
+
+Outer HTML:
+```html
+<div class="rounded-3xl p-5 bg-white/5 backdrop-blur border border-white/10 shadow-2xl"><div class="flex items-start gap-3"><div class="text-4xl select-none" aria-hidden="true">😎</div><h2 class="text-lg font-bold leading-relaxed flex-1"><span class="block " dir="rtl"><span dir="rtl">مقاومة كهربائية </span><span dir="rtl">10 Ω </span><span dir="rtl">وتيار </span><span dir="ltr" class="inline-block mx-1 align-middle max-w-full overflow-x-auto"><span data-testid="react-katex"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mi>A</mi><mi mathvariant="normal">.</mi></mrow><annotation encoding="application/x-tex">2 A.</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord">2</span><span class="mord mathnormal">A</span><span class="mord">.</span></span></span></span></span></span><span dir="rtl">ما الجهد؟</span></span></h2></div><div class="mt-4 space-y-2"><button class="w-full text-right p-3 rounded-xl border transition-all font-medium border-white/10 bg-white/5 hover:bg-white/10" disabled=""><span class="inline-block w-6 h-6 rounded-full bg-white/10 text-center text-xs leading-6 ms-2">أ</span><span class="block " dir="rtl"><span dir="ltr" class="inline-block mx-1 align-middle max-w-full overflow-x-auto"><span data-testid="react-katex"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>5</mn><mi>V</mi></mrow><annotation encoding="application/x-tex">5 V</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord">5</span><span class="mord mathnormal" style="margin-right:0.2222em;">V</span></span></span></span></span></span></span></button><button class="w-full text-right p-3 rounded-xl border transition-all font-medium border-white/10 bg-white/5 hover:bg-white/10" disabled=""><span class="inline-block w-6 h-6 rounded-full bg-white/10 text-center text-xs leading-6 ms-2">ب</span><span class="block " dir="rtl"><span dir="ltr" class="inline-block mx-1 align-middle max-w-full overflow-x-auto"><span data-testid="react-katex"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>10</mn><mi>V</mi></mrow><annotation encoding="application/x-tex">10 V</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord">10</span><span class="mord mathnormal" style="margin-right:0.2222em;">V</span></span></span></span></span></span></span></button><button class="w-full text-right p-3 rounded-xl border transition-all font-medium border-emerald-400 bg-emerald-500/20" disabled=""><span class="inline-block w-6 h-6 rounded-full bg-white/10 text-center text-xs leading-6 ms-2">ج</span><span class="block " dir="rtl"><span dir="ltr" class="inline-block mx-1 align-middle max-w-full overflow-x-auto"><span data-testid="react-katex"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>20</mn><mi>V</mi></mrow><annotation encoding="application/x-tex">20 V</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord">20</span><span class="mord mathnormal" style="margin-right:0.2222em;">V</span></span></span></span></span></span></span></button><button class="w-full text-right p-3 rounded-xl border transition-all font-medium border-white/10 bg-white/5 hover:bg-white/10" disabled=""><span class="inline-block w-6 h-6 rounded-full bg-white/10 text-center text-xs leading-6 ms-2">د</span><span class="block " dir="rtl"><span dir="ltr" class="inline-block mx-1 align-middle max-w-full overflow-x-auto"><span data-testid="react-katex"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>40</mn><mi>V</mi></mrow><annotation encoding="application/x-tex">40 V</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord">40</span><span class="mord mathnormal" style="margin-right:0.2222em;">V</span></span></span></span></span></span></span></button></div><div class="mt-4 p-3 rounded-xl bg-white/5 border border-white/10 text-sm" style="opacity: 1;"><div class="font-bold mb-2">💡 شرح:</div><div class="space-y-3 " dir="rtl"><p class="leading-relaxed text-right" dir="rtl">الجهد </p><div dir="ltr" class="my-2 max-w-full overflow-x-auto overflow-y-hidden py-3 px-3 rounded-lg bg-white/5 border border-white/10 text-center"><div data-testid="react-katex"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mo>=</mo></mrow><annotation encoding="application/x-tex">=</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">=</span></span></span></span></span></div></div><p class="leading-relaxed text-right" dir="rtl">المقاومة </p><p class="leading-relaxed text-right" dir="rtl">× </p><p class="leading-relaxed text-right" dir="rtl">التيار </p><div dir="ltr" class="my-2 max-w-full overflow-x-auto overflow-y-hidden py-3 px-3 rounded-lg bg-white/5 border border-white/10 text-center"><div data-testid="react-katex"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mo>=</mo><mn>10</mn><mo>×</mo><mn>2</mn><mo>=</mo><mn>20</mn><mi>V</mi><mo stretchy="false">(</mo></mrow><annotation encoding="application/x-tex">= 10 \times  2 = 20 V (</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">10</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">20</span><span class="mord mathnormal" style="margin-right:0.2222em;">V</span><span class="mopen">(</span></span></span></span></span></div></div><p class="leading-relaxed text-right" dir="rtl">قانون أوم</p><p class="leading-relaxed text-right" dir="rtl">)</p></div></div></div>
+```
+
+Dimensions:
+- top: -389px
+- left: 16px
+- width: 551px
+- height: 886px
+
+CSS:
+```css
+*, ::before, ::after { --tw-border-spacing-x: 0;
+  --tw-border-spacing-y: 0;
+  --tw-translate-x: 0;
+  --tw-translate-y: 0;
+  --tw-rotate: 0;
+  --tw-skew-x: 0;
+  --tw-skew-y: 0;
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+  --tw-pan-x:  ;
+  --tw-pan-y:  ;
+  --tw-pinch-zoom:  ;
+  --tw-scroll-snap-strictness: proximity;
+  --tw-gradient-from-position:  ;
+  --tw-gradient-via-position:  ;
+  --tw-gradient-to-position:  ;
+  --tw-ordinal:  ;
+  --tw-slashed-zero:  ;
+  --tw-numeric-figure:  ;
+  --tw-numeric-spacing:  ;
+  --tw-numeric-fraction:  ;
+  --tw-ring-inset:  ;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-offset-color: #fff;
+  --tw-ring-color: rgb(59 130 246 / 0.5);
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  --tw-blur:  ;
+  --tw-brightness:  ;
+  --tw-contrast:  ;
+  --tw-grayscale:  ;
+  --tw-hue-rotate:  ;
+  --tw-invert:  ;
+  --tw-saturate:  ;
+  --tw-sepia:  ;
+  --tw-drop-shadow:  ;
+  --tw-backdrop-blur:  ;
+  --tw-backdrop-brightness:  ;
+  --tw-backdrop-contrast:  ;
+  --tw-backdrop-grayscale:  ;
+  --tw-backdrop-hue-rotate:  ;
+  --tw-backdrop-invert:  ;
+  --tw-backdrop-opacity:  ;
+  --tw-backdrop-saturate:  ;
+  --tw-backdrop-sepia:  ;
+  --tw-contain-size:  ;
+  --tw-contain-layout:  ;
+  --tw-contain-paint:  ;
+  --tw-contain-style:  ; }
+*, ::before, ::after { box-sizing: border-box; /* 1 */
+  border-width: 0; /* 2 */
+  border-style: solid; /* 2 */
+  border-color: #e5e7eb; /* 2 */ }
+* { border-color: hsl(var(--border)); }
+.rounded-3xl { border-radius: 1.5rem; }
+.border { border-width: 1px; }
+.border-white\/10 { border-color: rgb(255 255 255 / 0.1); }
+.bg-white\/5 { background-color: rgb(255 255 255 / 0.05); }
+.p-5 { padding: 1.25rem; }
+.shadow-2xl { --tw-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  --tw-shadow-colored: 0 25px 50px -12px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow); }
+.backdrop-blur { --tw-backdrop-blur: blur(8px);
+  backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia); }
+.space-y-4 > :not([hidden]) ~ :not([hidden]) { --tw-space-y-reverse: 0;
+  margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(1rem * var(--tw-space-y-reverse)); }
+
+/* Pseudo-elements */
+::before, ::after { --tw-content: ''; }
+
+/* Inherited */
+.text-white { color: rgb(255 255 255 / var(--tw-text-opacity, 1)) }
+body { color: hsl(var(--foreground)); font-family: 'Cairo', sans-serif }
+html, :host { line-height: 1.5; tab-size: 4 }
+html { direction: rtl }
+
+/* Resolved values */
+padding: 20px;
+border-radius: 24px;
+border: 0.8px solid rgba(255, 255, 255, 0.1);
+backdrop-filter: blur(8px);
+background-color: rgba(255, 255, 255, 0.05);
+box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
+box-sizing: border-box;
+color: rgb(255, 255, 255);
+direction: rtl;
+display: block;
+font-family: Cairo, sans-serif;
+font-feature-settings: normal;
+height: 870px;
+line-height: 24px;
+margin-bottom: 0px;
+margin-top: 16px;
+tab-size: 4;
+unicode-bidi: isolate /*UA*/;
+width: 551.2px;
+
+/* CSS variables */
+--border: 214 25% 88%;
+--tw-ring-offset-shadow: 0 0 #0000;
+--tw-backdrop-sepia: ;
+--tw-ring-shadow: 0 0 #0000;
+--tw-backdrop-saturate: ;
+--tw-backdrop-invert: ;
+--tw-text-opacity: 1;
+--tw-backdrop-grayscale: ;
+--tw-backdrop-contrast: ;
+--tw-backdrop-brightness: ;
+--tw-backdrop-blur: blur(8px);
+--tw-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+--tw-backdrop-hue-rotate: ;
+--tw-space-y-reverse: 0;
+--foreground: 215 25% 15%;
+--tw-backdrop-opacity: ;
+```
